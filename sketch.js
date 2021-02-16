@@ -1,10 +1,12 @@
 const Engine = Matter.Engine;
 const World= Matter.World;
 const Bodies = Matter.Bodies;
+const Constraint= Matter.Constraint;
 
 var engine, world;
 var box1, pig1;
 var backgroundImg,platform;
+var sling1;
 
 function preload() {
     backgroundImg = loadImage("sprites/bg.png");
@@ -35,8 +37,10 @@ function setup(){
     log5 = new Log(870,120,150, -PI/7);
 
     bird = new Bird(100,100);
-
+    op={x:275, y:150};
+    sling1 = new Sling(bird.body,op);
 }
+
 
 function draw(){
     background(backgroundImg);
@@ -59,6 +63,19 @@ function draw(){
     log4.display();
     log5.display();
 
+    sling1.display();
+    
     bird.display();
     platform.display();
+  
+}
+
+function mouseDragged() {
+    var move = {x:mouseX, y:mouseY};
+    Matter.Body.setPosition(bird.body,move) ;
+
+}
+
+function mouseReleased() {
+    sling1.fly();
 }
